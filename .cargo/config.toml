@@ -1,0 +1,19 @@
+[target.xtensa-esp32s3-none-elf]
+runner = "espflash flash --monitor --chip esp32s3 --log-format defmt"
+
+[env]
+DEFMT_LOG="info"
+
+[build]
+rustflags = [
+  "-C", "link-arg=-Wl,-r",        # Tell the linker to output an ET_REL (Relocatable) ELF
+  "-C", "link-arg=-Wl,-e,main", # Tells the linker not to strip the 'main' function
+  "-C", "link-arg=-nostartfiles",
+  "-C", "link-arg=-nodefaultlibs",
+  "-C", "link-arg=-nostdlib",
+]
+
+target = "xtensa-esp32s3-none-elf"
+
+[unstable]
+build-std = ["alloc", "core"]

@@ -1,0 +1,17 @@
+[package]
+name = "nek-elf-tests"
+version = "0.0.1"
+edition = "2024"
+
+[[bin]]
+name = "nek-elf-tests"
+path = "./src/main.rs"
+
+[dependencies]
+
+[profile.release]
+panic = "abort"
+lto = true
+opt-level = "z"
+codegen-units = 1
+# strip = "symbols"
