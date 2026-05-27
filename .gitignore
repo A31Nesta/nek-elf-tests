@@ -1,5 +1,8 @@
 /.direnv
 
+# Result of building ASM code
+/asm/**/*.o
+/asm/**/*.bin
 
 # Added by cargo
 
