@@ -1,9 +1,11 @@
 #![no_std]
 #![no_main]
 
+use core::ffi::{c_char, c_int};
+
 #[unsafe(no_mangle)]
 #[unsafe(link_section = ".text")]
-fn main() -> i32 {
+fn main(_argc: c_int, _argv: *const *const c_char) -> c_int {
     67
 }
 
