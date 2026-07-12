@@ -11,6 +11,8 @@ rustflags = [
   "-C", "link-arg=-nostartfiles",
   "-C", "link-arg=-nodefaultlibs",
   "-C", "link-arg=-nostdlib",
+
+  "-C", "link-arg=-Tcustom_layout.ld", # Add this layout to merge sections together (compatibility with Espressif ELF loader)
 ]
 
 target = "xtensa-esp32s3-none-elf"
