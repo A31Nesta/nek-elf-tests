@@ -3,6 +3,15 @@
 Small tests to compile ELF binaries for the ESP32-S3 (Xtensa) for use during
 the development of NEK, the base for a custom OS for embedded systems.
 
+## Disclaimer about compilation
+
+Currently, I'm compiling with a custom entry point `-Wl,-e,main` instead of
+the default. Usually, in ELF the entry point is `_start`, however, I'm compiling
+C and Rust with this custom entry point to skip setting up the runtime and
+system calls when my ELF Loader (Expel) was in early development.
+
+Proper entry point handling for C and Rust is in development.
+
 ## About the `asm` directory
 
 This is for some tests to create minimal executables with Assembly. You can
