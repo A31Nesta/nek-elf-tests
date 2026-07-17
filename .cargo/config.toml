@@ -6,13 +6,9 @@ DEFMT_LOG="info"
 
 [build]
 rustflags = [
-  "-C", "link-arg=-Wl,-r",        # Tell the linker to output an ET_REL (Relocatable) ELF
-  "-C", "link-arg=-Wl,-e,main", # Tells the linker not to strip the 'main' function
-  "-C", "link-arg=-nostartfiles",
-  "-C", "link-arg=-nodefaultlibs",
-  "-C", "link-arg=-nostdlib",
-
-  # "-C", "link-arg=-Tcustom_layout.ld", # Add this layout to merge sections together (compatibility with Espressif ELF loader)
+  "-C", "link-arg=-Wl,-r",
+  "-C", "link-arg=-Wl,-e,_start", # Still necessary or else the program gets sad
+  "-C", "link-arg=-nostartfiles", # Don't include `crt0.o`, we'll use a custom one later on
 ]
 
 target = "xtensa-esp32s3-none-elf"
