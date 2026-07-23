@@ -3,40 +3,40 @@
 
 unsafe extern "C" {
     fn nek_serial_print(ptr: *const u8, len: usize);
-    fn nek_add(a: i32, b: i32) -> i32;
 
-    fn nek_program_kill(pid: u32);
+    fn sleep(seconds: u32);
+    fn exit();
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn main() {
-    let rust_string = "Hello, World! - From ELF - Rust\n";
-    let c_string = c"Hello, World! - From ELF - C\n";
+    let program_name = "[9-0] ";
+    let newline = "\n";
 
-    unsafe {
-        nek_serial_print(rust_string.as_ptr(), rust_string.len());
-        nek_serial_print(c_string.as_ptr(), c_string.count_bytes());
-
-        let stupid_sum = nek_add(10, 9);
-        nek_add(stupid_sum, 2); // to correct the addition :)
-        // 21
+    for i in 0..10 {
+        unsafe {
+            nek_serial_print(program_name.as_ptr(), program_name.len());
+            nek_serial_print(&('9' as u8 - i), 1);
+            nek_serial_print(newline.as_ptr(), newline.len());
+            sleep(2);
+        }
     }
 }
 
 #[unsafe(no_mangle)]
 #[unsafe(link_section = ".text")]
 pub extern "C" fn _start() -> ! {
-    let str = "Starting Program\n";
-    unsafe {
-        nek_serial_print(str.as_ptr(), str.len());
-    }
-
     main();
     unsafe {
-        nek_program_kill(0);
+        exit();
     }
 
-    loop {}
+    let exit_confirmation = "-- should exit --";
+    loop {
+        unsafe {
+            nek_serial_print(exit_confirmation.as_ptr(), exit_confirmation.len());
+        }
+    }
 }
 
 #[panic_handler]
