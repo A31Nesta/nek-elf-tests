@@ -1,21 +1,42 @@
 # NEK ELF Tests
 
 Small tests to compile ELF binaries for the ESP32-S3 (Xtensa) for use during
-the development of NEK, the base for a custom OS for embedded systems.
+the development of NEK, the base for my OS for ESP32-based devices.
+
+Since I only run these programs with NEK, I don't know if they work with ELF
+loaders other than [Expel](https://git.black.observer/neos/expel), which is
+my `no_std` Rust ELF Loader.
 
 ## Disclaimer about compilation
 
-Currently, I'm compiling with a custom entry point `-Wl,-e,main` instead of
-the default. Usually, in ELF the entry point is `_start`, however, I'm compiling
-C and Rust with this custom entry point to skip setting up the runtime and
-system calls when my ELF Loader (Expel) was in early development.
+I'm compiling with a custom entry point `-Wl,-e,_start`. This `_start`
+function is the same as any other normal `_start` function in ELF, however,
+specifying the entry point is necessary to make it work with relocatable
+(`-Wl,-r`) objects. Since this `_start` function is fully custom, it collides
+with whatever implementation GCC wants to include by default, which means
+that we also want to compile with `-nostartfiles`.
 
-Proper entry point handling for C and Rust is in development.
+A custom `crt0.o` could also be used, but the point is that compilation 
+always requires a bit of setup on this target.
+
+---
+
+# Legacy stuff - Research
+
+At the time of writing, NEK can load standard C/Rust programs that can
+interact with the kernel (host/firmware) with syscalls.
+
+The first ever program I made in this repository was a simple C-like `main`
+function that would return an arbitrary number (`67`). The entry point wasn't `_start` since I would just grab the `.text` section (`main`) and
+directly copy it into a buffer in IRAM.
+
+In the history of this repository we have some programs that I ran by
+`objcopy`-ing `.text`, hacky strangely-compiled ELF files and normal ELF
+files.
 
 ## About the `asm` directory
 
-This is for some tests to create minimal executables with Assembly. You can
-compile the code with the following commands:
+This was one of my first tests to create valid LX7 machine code that I could copy to IRAM. You can assemble the ASM code with the following commands:
 
 ```bash
 xtensa-esp32s3-elf-as asm/return67.S -o asm/return67.o
