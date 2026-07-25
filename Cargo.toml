@@ -8,6 +8,8 @@ name = "nek-elf-tests"
 path = "./src/main.rs"
 
 [dependencies]
+nek-sys = { "path" = "../nek-sys/nek-sys" }
+nek-sys-macros = { "path" = "../nek-sys/nek-sys-macros" }
 
 [profile.release]
 panic = "abort"
