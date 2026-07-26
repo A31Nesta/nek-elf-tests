@@ -10,6 +10,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "launcher"
+version = "0.0.1"
+dependencies = [
+ "nek-sys",
+]
+
+[[package]]
 name = "nek-sys"
 version = "0.0.1"
 dependencies = [
@@ -23,6 +30,13 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "panic"
+version = "0.0.1"
+dependencies = [
+ "nek-sys",
 ]
 
 [[package]]
