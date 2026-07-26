@@ -77,6 +77,7 @@
           packages = [
             pkgs.espflash
             toolchain-pkg
+            pkgs.cargo-bloat
           ];
 
           # Optional: sometimes helper tools need to know where libs are

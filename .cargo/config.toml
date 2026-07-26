@@ -1,17 +1,18 @@
-[target.xtensa-esp32s3-none-elf]
-runner = "espflash flash --monitor --chip esp32s3 --log-format defmt"
-
-[env]
-DEFMT_LOG="info"
+[alias]
+xtask = "run --package xtask --"
 
 [build]
 rustflags = [
-  "-C", "link-arg=-Wl,-r",
-  "-C", "link-arg=-Wl,-e,_start", # Still necessary or else the program gets sad
-  "-C", "link-arg=-nostartfiles", # Don't include `crt0.o`, we'll use a custom one later on
+  # "-C", "link-arg=-Wl,-r",
+  # "-C", "link-arg=-Wl,-e,_start", # Still necessary or else the program gets sad
+  # "-C", "link-arg=-nostartfiles", # Don't include `crt0.o`, we'll use a custom one later on
+
+  # "-C", "link-arg=-ffunction-sections",
+  # "-C", "link-arg=-fdata-sections",
+  # "-C", "link-arg=-Wl,--gc-sections",
 ]
 
-target = "xtensa-esp32s3-none-elf"
+# target = "xtensa-esp32s3-none-elf"
 
 [unstable]
 build-std = ["alloc", "core"]
